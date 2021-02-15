@@ -1,0 +1,11 @@
+@import url('./assets/reset.css');
+@import url('./assets/layout.css');
+@import url('./assets/typography.css');
+@import url('./assets/responsive.css');
+
+body {
+    max-width: 1366px;
+    margin: auto;
+    position: relative;
+    min-height: 100vh;
+}
