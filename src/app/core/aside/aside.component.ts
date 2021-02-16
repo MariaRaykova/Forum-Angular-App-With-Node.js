@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPost } from '../../shared/interfaces/post';
-import { PostService } from '../post.service';
+import { Store } from '@ngrx/store';
+import { IThemeModuleState } from 'src/app/theme/+store';
+import { themeListLoadPostList } from 'src/app/theme/+store/actions';
 
 @Component({
   selector: 'app-aside',
@@ -9,13 +10,13 @@ import { PostService } from '../post.service';
 })
 export class AsideComponent implements OnInit {
   @Input() title: string;
-  @Input() postList: IPost[];
-
-  constructor(private postService: PostService) { }
+ 
+  postList$ = this.store.select(state => state.theme.list.postList)
+  isLoading$ =  this.store.select(state => state.theme.list.isLoading);
+ 
+  constructor(private store: Store<IThemeModuleState>) { }
 
   ngOnInit(): void { 
-    this.postService.loadPost(5).subscribe(pList => {
-      this.postList = pList;
-    })
+    this.store.dispatch(themeListLoadPostList())
   }
 }
