@@ -1,0 +1,12 @@
+
+<div class="container">
+<main>
+    <div class="theme-title" *ngIf="(themeList$ | async)">
+    <app-theme-list-item *ngFor="let theme of (themeList$ | async)" [theme]="theme" ></app-theme-list-item>
+</div>
+<app-loader [isLoading]="(isLoading$ | async)"></app-loader>
+  </main>
+  <aside>
+  <app-aside title="Recent posts"> </app-aside>
+ </aside>
+</div>
