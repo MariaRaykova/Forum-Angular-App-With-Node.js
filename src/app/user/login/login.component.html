@@ -1,0 +1,39 @@
+<form #f="ngForm" class="login" (ngSubmit)="loginHandler(f.value)">
+    <fieldset>
+        <h2>Login Form</h2>
+
+        <p class="field field-icon">
+            <label for="email"><span><i class="fas fa-envelope"></i></span></label>
+            <input #userEmail="ngModel" [class.input-error]="userEmail.touched&&!!userEmail.errors" type="email" name="email" id="email"
+                placeholder="john.doe@gmail.com" ngModel required appEmailValidator>
+        </p>
+
+        <p class="error" *ngIf="userEmail.touched && userEmail.errors?.required">
+            Email is required!
+        </p>
+        <p class="error" *ngIf="userEmail.errors?.appEmailValidator">
+            Email is not valid!
+        </p>
+
+        <p class="field field-icon">
+            <label for="password"><span><i class="fas fa-lock"></i></span></label>
+            <input #userPassword="ngModel" ngModel required minlength="4" type="password" name="password" id="password" [class.input-error]="userPassword.touched&&!!userPassword.errors"
+                placeholder="******">
+        </p>
+        <p *ngIf="userPassword.touched && userPassword.errors?.required" class="error">
+            Password is required!
+        </p>
+        <p *ngIf="userPassword.errors?.minlength" class="error">
+            Password must be at least 4 characters!
+        </p>
+        <p *ngIf="errorMessage$ | async as errorMessage" class="error">
+           {{errorMessage}}
+        </p>
+        <button [disabled]="(isLoading$ | async) || f.invalid">Login</button>
+        <app-loader [isLoading]="(isLoading$ | async)"></app-loader>
+        <p class="text-center">
+            Have an account?
+            <a routerLink="/user/register">Register</a>
+        </p>
+    </fieldset>
+</form>
